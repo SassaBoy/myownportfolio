@@ -1,11 +1,11 @@
 {
   "name": "second-portfolio",
   "version": "1.0.0",
-  "description": "JohnDoe Free Bootstrap landing page for personal and commercial use. Designed with ♥️ and creativity by Devcrud.com",
+  "description": "Deon Gewers is a software Engineer based in Windhoek",
   "main": "index.ejs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
