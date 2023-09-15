@@ -8,6 +8,7 @@ const PortfolioItem = require('./models/PortfolioItem');
 const sharp = require('sharp'); // Import the sharp library
 const fs = require('fs');
 require('dotenv').config();
+const cors = require('cors'); // Import the cors middleware
 
 const nodemailer = require('nodemailer');
 
@@ -29,6 +30,7 @@ db.once('open', () => {
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(cors()); // Use the cors middleware to enable CORS
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,17 +50,18 @@ const transporter = nodemailer.createTransport({
   });
   
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
-  }
-});
-
- const upload = multer({ dest: 'uploads/' }); 
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      const extension = file.originalname.split('.').pop(); // Get the file extension
+      cb(null, uniqueSuffix + '.' + extension);
+    }
+  });
+  
+  const upload = multer({ storage: storage });
 
 
 
@@ -87,7 +90,7 @@ const storage = multer.diskStorage({
       await newPortfolioItem.save();
   
     //   res.status(200).json({ message: 'PortfolioItem saved successfully.' });
-      res.render('/admin');
+      res.redirect('/admin');
      
     } catch (error) {
       console.error('Error:', error);
@@ -95,6 +98,15 @@ const storage = multer.diskStorage({
     }
   });
   
+  app.use('/vendors', express.static(__dirname + '/public/vendors', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  },
+}));
+
+
 
 app.get('/', async (req, res) => {
   try {

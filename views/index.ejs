@@ -420,7 +420,10 @@
                     <% portfolioItems.forEach(item => { %>
                         <div class="col-md-6 col-lg-3 web new">
                             <div class="portfolio-item">
-                                <img src="<%= item.image %>" class="img-fluid" alt="<%= item.title %>">
+                                <!-- Add a unique query parameter to the image source for cache busting -->
+                                <img src="<%= item.image + '?timestamp=' + Date.now() %>" class="img-fluid" alt="<%= item.title %>">
+
+
                                 <div class="content-holder">
                                     <a class="img-popup" href="<%= item.imageUrl %>"></a>
                                     <div class="text-holder">
@@ -435,10 +438,6 @@
                     <!-- Handle case when there are no portfolio items -->
                     <p>No portfolio items available.</p>
                 <% } %>
-            </div>
-        </div>
-    </div>
-</section>
 
 
             </div>

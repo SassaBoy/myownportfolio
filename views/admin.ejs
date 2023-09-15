@@ -92,7 +92,7 @@
     <ul>
         <% portfolioItems.forEach(item => { %>
             <li>
-                <img src="<%= item.imageUrl %>" alt="<%= item.title %>">
+                <img src="<%= item.image %>" alt="<%= item.title %>">
                 <span><%= item.title %></span>
                 <a class="delete-link" href="/admin/delete/<%= item._id %>">Delete</a>
             </li>
