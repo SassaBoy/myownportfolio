@@ -39,7 +39,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static('uploads')); // Replace 'uploads' with the directory containing your images
 
 
-
+const corsOptions = {
+  origin: 'https://myportfolio-pe5i.onrender.com/', // Replace with your allowed origin
+  optionsSuccessStatus: 200,
+};
   // Configure nodemailer to send emails (replace with your email service provider settings)
 const transporter = nodemailer.createTransport({
     service: 'gmail', // e.g., 'Gmail'
