@@ -43,6 +43,7 @@ const corsOptions = {
   origin: 'https://myportfolio-pe5i.onrender.com/', // Replace with your allowed origin
   optionsSuccessStatus: 200,
 };
+app.use(cors(corsOptions));
   // Configure nodemailer to send emails (replace with your email service provider settings)
 const transporter = nodemailer.createTransport({
     service: 'gmail', // e.g., 'Gmail'
